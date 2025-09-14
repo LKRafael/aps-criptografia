@@ -67,8 +67,13 @@ while True:     # Loop para reiniciar o programa caso o usuário queira
     
     print(f"A mensagem processada é: {resultado}")
 
-    continuar = input('Deseja processar outra mensagem? Digite "S" para reiniciar o programa ou "N" para encerrar: ').lower()
+    while True:     # Loop para forçar uma entrada válida
+        continuar = input('Deseja processar outra mensagem? Digite "S" para reiniciar ou "N" para encerrar: ').lower()
+        if continuar in ("s", "n"):     # Percorre a 'tupla' para comparar o valor #amopython
+            break   # Sai do loop depois de receber a entrada esperada
+        else:
+            print('Opção inválida! Digite apenas "S" ou "N"')
+
     if continuar == "n":
-# Caso o usuário digite algo diferente de "n", o loop continua e reinicia o programa
         print("Encerrando o programa...")
         break
