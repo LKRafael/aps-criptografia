@@ -4,7 +4,7 @@ while True:     # Loop para reiniciar o programa caso o usuário queira
 
     while True:     # Laço de repetição para forçar uma entrada válida de mensagem
 
-        mensagem = input("Digite a mensagem que deseja processar (até 128 caracteres): ")
+        mensagem = input("Digite a mensagem que deseja processar (até 128 caracteres): ") 
 
         if len(mensagem) <= 128:    # Uso de 'len' para a contagem de caracteres dentro da mensagem
             break   # sai do loop
@@ -35,3 +35,17 @@ while True:     # Loop para reiniciar o programa caso o usuário queira
 
         except ValueError:
             print("Entrada inválida, utilize apenas números")
+
+    resultado = ""      # Variável vazia que vai acumular os caracteres da mensagem
+
+    for c in mensagem:      # Loop que percorre cada caractere da mensagem
+
+        if c.isupper():       # Verifica se o caractere  é maiúsculo
+            resultado += c    # Adiciona caractere
+
+        elif c.islower():     # Verifica se o caractere é minúsculo
+            resultado += c
+
+        else:       # Para outros tipos de caracteres (espaço, número, pontuação, etc)
+            resultado += c
+            
