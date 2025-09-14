@@ -14,13 +14,13 @@ while True:     # Loop para reiniciar o programa caso o usuário queira
 
     while True:     # Loop para forçar o usuário a escolher apenas as opções dadas
         
-        acao = input("Digite a ação que deseja realizar ('c' para criptografar e 'd' para descriptografar): ").lower()
+        acao = input('Digite a ação que deseja realizar ("c" para criptografar e "d" para descriptografar): ').lower()
         # Uso de 'lower' para aceitar caso o usuário digite 'c' ou 'd' em maiúsculo
 
         if acao == "c" or acao == "d":
             break
         else:
-            print("Ação inválida! digite apenas 'c' ou 'd' para continuar")
+            print('Ação inválida! digite apenas "c" ou "d" para continuar')
 
     while True:     # Loop para forçar uma entrada de chave válida
 
@@ -36,16 +36,39 @@ while True:     # Loop para reiniciar o programa caso o usuário queira
         except ValueError:
             print("Entrada inválida, utilize apenas números")
 
-    resultado = ""      # Variável vazia que vai acumular os caracteres da mensagem
+    resultado = ""      # Variável vazia que vai acumular os caracteres da mensagem (1 por vez)
 
     for c in mensagem:      # Loop que percorre cada caractere da mensagem
 
         if c.isupper():       # Verifica se o caractere  é maiúsculo
-            resultado += c    # Adiciona caractere
+            base = ord('A')     # Se o caractere for maiúsculo, a variável "base" vai usar a letra A da tabela ASCII como base
+            if acao == "c":
+                resultado += chr((ord(c) - base + chave) % 26 + base)      # Criptografar
+# Transforma o caractere em número da tabela ASCII, subtrai pela variável "base" para a base ficar em um valor de 0 a 25,
+# depois soma (para criptografar) ou subtrai (para descriptografar) a chave. Então o uso de "% 26" (resto de divisão)
+# para garantir que o caractere vai se manter dentro das 26 letras do alfabeto, por conseguinte a soma da base novamente
+# para voltar ao padrão da tabela ASCII. Assim temos o uso de "chr" para transformar o valor de número para letras
+# de volta e "+=" para adicionar caracteres ao resultado
+            else:
+                resultado += chr((ord(c) - base - chave) % 26 + base)      # Descriptografar
 
+# Nota do Luska: caracteres maiúsculos e minúsculos tem valores diferentes na tabela ASCII, por isso
+# a verificação e também o valor da "base" ser alternado para cada um dos casos
+    
         elif c.islower():     # Verifica se o caractere é minúsculo
-            resultado += c
+            base = ord('a')
+            if acao == "c":
+                resultado += chr((ord(c) - base + chave) % 26 + base)
+            else:
+                resultado += chr((ord(c) - base - chave) % 26 + base)
 
         else:       # Para outros tipos de caracteres (espaço, número, pontuação, etc)
-            resultado += c
-            
+            resultado += c      # Adiciona mais caractere a variável
+    
+    print(f"A mensagem processada é: {resultado}")
+
+    continuar = input('Deseja processar outra mensagem? Digite "S" para reiniciar o programa ou "N" para encerrar: ').lower()
+    if continuar == "n":
+# Caso o usuário digite algo diferente de "n", o loop continua e reinicia o programa
+        print("Encerrando o programa...")
+        break
